@@ -151,3 +151,35 @@ exports.changePassword = BigPromise(async (req, res, next) => {
 
   cookieToken(user, res);
 });
+
+
+exports.updateUserDetails = BigPromise(async (req, res, next) => {
+  
+  const newData = {
+    name: req.body.name,
+    email: req.body.email
+  }
+// #10-7 
+  //check if the user provided the image for update or note
+  // if(req.files.photo !== ''){
+  //  const user =  User.findById(req.user.id)
+
+  //  const imageId = user.photo.id
+
+  //  delete image 
+  //  const resp = await
+
+  //  update new photo 
+  // }
+
+  const user = await User.findByIdAndUpdate(req.user.id, newData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false
+  })
+
+  res.status(200).json({
+    success: true
+  });
+
+});
