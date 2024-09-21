@@ -21,3 +21,5 @@ const mailHelper = async (options) => {
   };
   await transporter.sendMail(message);
 };
+
+module.exports = mailHelper;

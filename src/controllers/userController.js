@@ -2,6 +2,7 @@ const User = require("../models/user");
 const BigPromise = require("../middlewares/bigPromise");
 const CustomError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
+const mailHelper = require("../utils/emailHelper");
 
 exports.signup = BigPromise(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -52,4 +53,43 @@ exports.logout = BigPromise(async(req, res, next) => {
     success: true,
     message: "logout success"
   })
+})
+
+
+exports.forgotPassword = BigPromise(async(req, res, next) => {
+  const { email } = req.body;
+
+  const user = await User.findOne({email})
+
+  if(!user) {
+    return next(new CustomError('Email not found', 400))
+  }
+
+  const forgotToken = user.getForgotPasswordToken()
+
+  await user.save({validateBeforeSave: false})
+
+  const forgotUrl = `${req.protocol}://${req.get("host")}/password/reset${forgotToken}`
+
+  const message = `Copy paste this link in your browser to reset password \n \n ${forgotUrl}`
+
+  try{ 
+    await mailHelper({
+      email: user.email,
+      subject: "Homework Service - Password reset email",
+      message
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Email sent successfully"
+    })
+
+  }catch(err){
+    user.forgotPasswordToken = undefined
+    user.forgotPasswordExpiry = undefined
+    await user.save({validateBeforeSave: false})
+
+    return next(new CustomError(err.message, 500))
+  }
 })
