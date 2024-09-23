@@ -1,8 +1,12 @@
 const express = require("express");
-const { addService } = require("../controllers/serviceController");
+const {
+  addService,
+  getAllServices,
+} = require("../controllers/serviceController");
 const { isLoggedIn } = require("../middlewares/user");
 const router = express.Router();
 
-router.route("/service").post(isLoggedIn, addService);
+router.route("/add/service").post(isLoggedIn, addService);
+router.route("/services").get(getAllServices);
 
 module.exports = router;
