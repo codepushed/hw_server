@@ -1,7 +1,7 @@
 const BigPromise = require("../middlewares/bigPromise");
 const CustomError = require("../utils/customError");
 const Service = require("../models/service");
-const WhereClause = require('../utils/whereClause');
+const WhereClause = require("../utils/whereClause");
 
 exports.addService = BigPromise(async (req, res, next) => {
   // images
@@ -76,5 +76,48 @@ exports.getService = BigPromise(async (req, res, next) => {
   res.status(200).json({
     success: true,
     service,
+  });
+});
+
+exports.addReview = BigPromise(async (req, res, next) => {
+  const { rating, comment, serviceId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const service = await Service.findById(serviceId);
+
+  const AlreadyReview = service.reviews.find(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  if (AlreadyReview) {
+    service.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    service.reviews.push(review);
+    service.numberOfReviews = service.reviews.length;
+  }
+
+  // adjust ratings
+
+  service.ratings =
+    service.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    service.reviews.length;
+
+  //save
+
+  await service.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
   });
 });
