@@ -66,3 +66,15 @@ exports.getAllServices = BigPromise(async (req, res, next) => {
     resultPerPage,
   });
 });
+
+exports.getService = BigPromise(async (req, res, next) => {
+  const service = await Service.findById(req.params.id);
+
+  if (!service) {
+    return next(new CustomError("No service found with this id", 401));
+  }
+  res.status(200).json({
+    success: true,
+    service,
+  });
+});
