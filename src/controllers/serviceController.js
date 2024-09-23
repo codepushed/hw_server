@@ -121,3 +121,37 @@ exports.addReview = BigPromise(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.deleteReview = BigPromise(async (req, res, next) => {
+  const { serviceId } = req.query;
+
+  const service = await Service.findById(serviceId);
+
+  const reviews = service.reviews.filter(
+    (rev) => rev.user.toString() === req.user._id.toString()
+  );
+
+  const numberOfReviews = reviews.length;
+
+  service.ratings =
+    service.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    service.reviews.length;
+
+  await Service.findByIdAndUpdate(
+    serviceId,
+    {
+      reviews,
+      ratings,
+      numberOfReviews,
+    },
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});
