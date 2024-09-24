@@ -6,6 +6,7 @@ const {
   addReview,
   deleteReview,
   deleteService,
+  updateService,
 } = require("../controllers/serviceController");
 const { isLoggedIn } = require("../middlewares/user");
 const router = express.Router();
@@ -18,6 +19,7 @@ router.route("/review").delete(isLoggedIn, deleteReview);
 router.route("/review").delete(isLoggedIn, deleteReview);
 router
   .route("/service/:id")
+  .put(isLoggedIn, updateService)
   .delete(isLoggedIn,  deleteService);
 
 

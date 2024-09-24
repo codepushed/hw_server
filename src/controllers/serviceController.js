@@ -175,3 +175,48 @@ exports.deleteService = BigPromise(async (req, res, next) => {
     message: "service was deleted !",
   });
 });
+
+exports.updateService = BigPromise(async (req, res, next) => {
+  let service = await Service.findById(req.params.id);
+
+  if (!service) {
+    return next(new CustomError("No product found with this id", 401));
+  }
+  // let imagesArray = [];
+
+  // if (req.files) {
+  //   //destroy the existing image
+  //   for (let index = 0; index < product.photos.length; index++) {
+  //     const res = await cloudinary.v2.uploader.destroy(
+  //       product.photos[index].id
+  //     );
+  //   }
+
+  //   for (let index = 0; index < req.files.photos.length; index++) {
+  //     let result = await cloudinary.v2.uploader.upload(
+  //       req.files.photos[index].tempFilePath,
+  //       {
+  //         folder: "products", //folder name -> .env
+  //       }
+  //     );
+
+  //     imagesArray.push({
+  //       id: result.public_id,
+  //       secure_url: result.secure_url,
+  //     });
+  //   }
+  // }
+
+  // req.body.photos = imagesArray;
+
+  service = await Service.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+    service,
+  });
+});
