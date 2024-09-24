@@ -155,3 +155,23 @@ exports.deleteReview = BigPromise(async (req, res, next) => {
     success: true,
   });
 });
+
+exports.deleteService = BigPromise(async (req, res, next) => {
+  const service = await Service.findById(req.params.id);
+
+  if (!service) {
+    return next(new CustomError("No product found with this id", 401));
+  }
+
+  //destroy the existing image
+  // for (let index = 0; index < service.photos.length; index++) {
+  //   const res = await cloudinary.v2.uploader.destroy(product.photos[index].id);
+  // }
+
+  await Service.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({
+    success: true,
+    message: "service was deleted !",
+  });
+});
