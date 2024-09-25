@@ -27,6 +27,14 @@ const serviceSchema = new mongoose.Schema({
     maxlength: [6, "Product price should not be more than 6 digits"],
   },
   //   images: [String],
+  ratings: {
+    type: Number,
+    default: 0
+  },
+  numberOfReviews: {
+    type: Number,
+    default: 0
+  },
   reviews: [
     {
       user: {

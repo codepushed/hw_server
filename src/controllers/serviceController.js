@@ -32,7 +32,6 @@ exports.addService = BigPromise(async (req, res, next) => {
 
   // req.body.photos = imageArray;
   req.body.user = req.user.id;
-  console.log(req.body);
 
   const services = await Service.create(req.body);
 
@@ -122,6 +121,16 @@ exports.addReview = BigPromise(async (req, res, next) => {
   });
 });
 
+exports.getReviewByServiceId = BigPromise(async (req, res, next) => {
+  const service = await Service.findById(req.query.id)
+
+  res.status(200).json({
+    success: true,
+    reviews: service.reviews
+  })
+
+});
+
 exports.deleteReview = BigPromise(async (req, res, next) => {
   const { serviceId } = req.query;
 
@@ -131,6 +140,7 @@ exports.deleteReview = BigPromise(async (req, res, next) => {
     (rev) => rev.user.toString() === req.user._id.toString()
   );
 
+  
   const numberOfReviews = reviews.length;
 
   service.ratings =
@@ -153,6 +163,7 @@ exports.deleteReview = BigPromise(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+    service,
   });
 });
 
