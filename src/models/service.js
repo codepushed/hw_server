@@ -10,30 +10,37 @@ const serviceSchema = new mongoose.Schema({
   gender: {
     type: String,
   },
-  subServiceName: {
-    type: String,
-    required: true,
-    required: [true, "please provide product name"],
-    trim: true,
-    maxlength: [120, "Product name should not be more than 120 characters"],
-  },
-  subServiceDescription: {
-    type: String,
-    required: [true, "please provide product description"],
-  },
-  price: {
-    type: Number,
-    required: [true, "please provide product price"],
-    maxlength: [6, "Product price should not be more than 6 digits"],
-  },
+  subCategory: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      subServiceName: [
+        {
+          name: {
+            type: String,
+            required: true,
+          },
+          price: {
+            type: String,
+          },
+          desc: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+    },
+  ],
   //   images: [String],
   ratings: {
     type: Number,
-    default: 0
+    default: 0,
   },
   numberOfReviews: {
     type: Number,
-    default: 0
+    default: 0,
   },
   reviews: [
     {
