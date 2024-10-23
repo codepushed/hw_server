@@ -42,7 +42,7 @@ exports.addService = BigPromise(async (req, res, next) => {
 });
 
 exports.getAllServices = BigPromise(async (req, res, next) => {
-  const resultPerPage = 3;
+  const resultPerPage = 20;
   const totalcountProduct = await Service.countDocuments();
 
   const serviceObj = new WhereClause(Service.find(), req.query)
