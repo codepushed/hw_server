@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const crypto = require('crypto')
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -21,6 +21,18 @@ const userSchema = new mongoose.Schema({
     minLength: [6, "Password should be atleast 6 character"],
     select: false,
   },
+  address: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   role: {
     type: String,
     default: "user",
@@ -66,9 +78,9 @@ userSchema.methods.getForgotPasswordToken = function () {
     .update(forgotToken)
     .digest("hex");
 
-    this.forgotPasswordExpiry = Date.now() + 20 * 60 * 1000;
+  this.forgotPasswordExpiry = Date.now() + 20 * 60 * 1000;
 
-    return forgotToken;
+  return forgotToken;
 };
 
 module.exports = mongoose.model("User", userSchema);

@@ -183,3 +183,42 @@ exports.updateUserDetails = BigPromise(async (req, res, next) => {
   });
 
 });
+
+exports.addAddress = BigPromise(async (req, res, next) => {
+  const { name, address } = req.body;
+
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    return res.status(404).json({ success: false, message: "User not found" });
+  }
+  user.address.push({ name, address });
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Address added successfully",
+    data: user.address,
+  });
+});
+
+exports.getAddress = BigPromise(async (req, res, next) => {
+  // Find the user by their ID
+  const user = await User.findById(req.user.id);
+
+  // Check if the user exists
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  // Respond with the user's addresses
+  res.status(200).json({
+    success: true,
+    addresses: user.address, // Return the list of addresses
+  });
+});
+
