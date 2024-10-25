@@ -8,8 +8,6 @@ const crypto = require("crypto");
 exports.signup = BigPromise(async (req, res, next) => {
   const { name, password, adhaarNumber, address, phoneNumber } = req.body;
 
-  console.log(req.body)
-
   if (!name || !password || !adhaarNumber || !address || !phoneNumber) {
     return next(new CustomError("Name, adhaar and password are required", 400));
   }
@@ -24,6 +22,16 @@ exports.signup = BigPromise(async (req, res, next) => {
 
   cookieToken(professional, res);
 });
+
+
+exports.getLoggedInProfessionalDetails = BigPromise(async (req, res, next) => {
+    const professional = await Professional.findById(req.professional.id);
+  
+    res.status(200).json({
+      success: true,
+      professional,
+    });
+  });
 
 // exports.login = BigPromise(async (req, res, next) => {
 //   const { email, password } = req.body;
