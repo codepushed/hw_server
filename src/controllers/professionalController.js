@@ -17,21 +17,41 @@ exports.signup = BigPromise(async (req, res, next) => {
     password,
     adhaarNumber,
     address,
-    phoneNumber
+    phoneNumber,
   });
 
   cookieToken(professional, res);
 });
 
-
 exports.getLoggedInProfessionalDetails = BigPromise(async (req, res, next) => {
-    const professional = await Professional.findById(req.professional.id);
-  
-    res.status(200).json({
-      success: true,
-      professional,
-    });
+  const professional = await Professional.findById(req.professional.id);
+
+  res.status(200).json({
+    success: true,
+    professional,
   });
+});
+
+exports.updateProfessionalDetails = BigPromise(async (req, res, next) => {
+  const newData = {
+    profession: req.body.profession,
+  };
+
+  const professional = await Professional.findByIdAndUpdate(
+    req.professional.id,
+    newData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    professional
+  });
+});
 
 // exports.login = BigPromise(async (req, res, next) => {
 //   const { email, password } = req.body;
