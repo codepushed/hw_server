@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 
-// professionalDetails{name, reviews[user, name, rating, comment], noOfReviews, phoneNo 
-
-
 const bookingSchema = new mongoose.Schema({
-  bookingInfo: {
+  bookingDetails: {
     address: {
       type: String,
       required: true,
@@ -30,48 +27,44 @@ const bookingSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  serviceItems: [
-    {
-      name: {
-        type: String,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      // image: {
-      //   type: String,
-      //   required: true,
-      // },
-      price: {
-        type: Number,
-        required: true,
-      },
-      service: {
-        type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
-        ref: "Service",
-        required: true,
-      },
-    },
-  ],
-  paymentInfo: {
-    id: {
-      type: String,
-    },
-  },
-  taxAmount: {
-    type: Number,
-    required: false,
-  },
-  totalAmount: {
-    type: Number,
-    required: false,
+  // serviceItems: [
+  //   {
+  //     quantity: {
+  //       type: Number,
+  //       // required: true,
+  //     },
+  //     // image: {
+  //     //   type: String,
+  //     //   required: true,
+  //     // },
+  //     service: {
+  //       type: mongoose.Schema.ObjectId,
+  //       ref: "Service",
+  //       required: true,
+  //     },
+  //   },
+  // ],
+  service: {
+    type: Object,
   },
   bookingStatus: {
     type: String,
     required: false,
-    default: "processing",
+    enum: ["Pending", "Accepted", "Completed", "Cancelled"],
+    default: "Pending",
+  },
+  professional: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Professional",
+    default: null,
+  },
+  acceptedAt: {
+    type: Date,
+    default: null,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
   createdAt: {
     type: Date,
@@ -79,4 +72,4 @@ const bookingSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Booking", bookingSchema);
+module.exports = mongoose.model("Bookings", bookingSchema);
