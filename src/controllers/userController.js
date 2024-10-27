@@ -4,6 +4,7 @@ const CustomError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
 const mailHelper = require("../utils/emailHelper");
 const crypto = require("crypto");
+const professional = require("../models/professional");
 
 exports.signup = BigPromise(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -152,36 +153,34 @@ exports.changePassword = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
-
 exports.updateUserDetails = BigPromise(async (req, res, next) => {
-  
   const newData = {
     name: req.body.name,
-    email: req.body.email
-  }
-// #10-7 
+    email: req.body.email,
+    role: req.body.role
+  };
+  // #10-7
   //check if the user provided the image for update or note
   // if(req.files.photo !== ''){
   //  const user =  User.findById(req.user.id)
 
   //  const imageId = user.photo.id
 
-  //  delete image 
+  //  delete image
   //  const resp = await
 
-  //  update new photo 
+  //  update new photo
   // }
 
   const user = await User.findByIdAndUpdate(req.user.id, newData, {
     new: true,
     runValidators: true,
-    useFindAndModify: false
-  })
-
-  res.status(200).json({
-    success: true
+    useFindAndModify: false,
   });
 
+  res.status(200).json({
+    success: true,
+  });
 });
 
 exports.addAddress = BigPromise(async (req, res, next) => {
@@ -222,3 +221,32 @@ exports.getAddress = BigPromise(async (req, res, next) => {
   });
 });
 
+exports.adminAllProfessionals = BigPromise(async (req, res, next) => {
+  const professionals = await professional.find();
+
+  res.status(200).json({
+    success: true,
+    professionals,
+  });
+});
+
+exports.adminUpdateOneProfessionalDetails = BigPromise(async (req, res, next) => {
+  const newData = {
+    isAdhaarVerified: req.body.isAdhaarVerified,
+  };
+
+  const professionals = await professional.findByIdAndUpdate(
+    req.params.id,
+    newData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    professionals
+  });
+});
