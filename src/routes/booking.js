@@ -2,9 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 const { isLoggedIn } = require("../middlewares/user");
-const { createBooking } = require("../controllers/bookingController");
+const { createBooking, getAllBookings } = require("../controllers/bookingController");
 
-router.route("/booking/create").post(createBooking);
+router.route("/booking/create").post(isLoggedIn, createBooking);
+router.route("/bookings").get(isLoggedIn, getAllBookings);
 
 
 module.exports = router;

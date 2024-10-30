@@ -7,9 +7,9 @@ const crypto = require("crypto");
 const professional = require("../models/professional");
 
 exports.signup = BigPromise(async (req, res, next) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, phone } = req.body;
 
-  if (!email || !name || !password) {
+  if (!email || !name || !password || !phone) {
     return next(new CustomError("Name, email and password are required", 400));
   }
 
@@ -17,27 +17,22 @@ exports.signup = BigPromise(async (req, res, next) => {
     name,
     email,
     password,
+    phone
   });
 
   cookieToken(user, res);
 });
 
 exports.login = BigPromise(async (req, res, next) => {
-  const { email, password } = req.body;
+  const { phone } = req.body;
 
-  if (!email || !password) {
+  if (!phone) {
     return next(new CustomError("please provide email and password", 400));
   }
 
-  const user = await User.findOne({ email }).select("+password");
+  const user = await User.findOne({ phone }).select("+password");
 
   if (!user) {
-    return next(new CustomError("No account found", 400));
-  }
-
-  const isPasswordCorrect = await user.isValidatePassword(password);
-
-  if (!isPasswordCorrect) {
     return next(new CustomError("No account found", 400));
   }
 
@@ -157,7 +152,7 @@ exports.updateUserDetails = BigPromise(async (req, res, next) => {
   const newData = {
     name: req.body.name,
     email: req.body.email,
-    role: req.body.role
+    role: req.body.role,
   };
   // #10-7
   //check if the user provided the image for update or note
@@ -230,23 +225,25 @@ exports.adminAllProfessionals = BigPromise(async (req, res, next) => {
   });
 });
 
-exports.adminUpdateOneProfessionalDetails = BigPromise(async (req, res, next) => {
-  const newData = {
-    isAdhaarVerified: req.body.isAdhaarVerified,
-  };
+exports.adminUpdateOneProfessionalDetails = BigPromise(
+  async (req, res, next) => {
+    const newData = {
+      isAdhaarVerified: req.body.isAdhaarVerified,
+    };
 
-  const professionals = await professional.findByIdAndUpdate(
-    req.params.id,
-    newData,
-    {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    }
-  );
+    const professionals = await professional.findByIdAndUpdate(
+      req.params.id,
+      newData,
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
 
-  res.status(200).json({
-    success: true,
-    professionals
-  });
-});
+    res.status(200).json({
+      success: true,
+      professionals,
+    });
+  }
+);

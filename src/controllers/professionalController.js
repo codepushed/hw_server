@@ -6,9 +6,9 @@ const mailHelper = require("../utils/emailHelper");
 const crypto = require("crypto");
 
 exports.signup = BigPromise(async (req, res, next) => {
-  const { name, password, adhaarNumber, address, phoneNumber } = req.body;
+  const { name, password, adhaarNumber, address, phone } = req.body;
 
-  if (!name || !password || !adhaarNumber || !address || !phoneNumber) {
+  if (!name || !password || !adhaarNumber || !address || !phone) {
     return next(new CustomError("Name, adhaar and password are required", 400));
   }
 
@@ -17,7 +17,7 @@ exports.signup = BigPromise(async (req, res, next) => {
     password,
     adhaarNumber,
     address,
-    phoneNumber,
+    phone,
   });
 
   cookieToken(professional, res);

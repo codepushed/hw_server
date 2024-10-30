@@ -7,17 +7,26 @@ const professionalSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a name"],
   },
-  phoneNumber: {
+  phone: {
     type: Number,
-    required: [true, "Please provide a phone number"],
-    unique: true,
+    required: false,
+    validate: {
+      validator: function (v) {
+        return /^[0-9]{10}$/.test(v); // Ensures exactly 10 digits
+      },
+      message: "Phone number should be exactly 10 digits",
+    },
+    sparse: true
   },
   adhaarNumber: {
     type: Number,
     required: [true, "Please provide a adhaar number"],
-    minLength: [12, "Adhaar number is of 12 digit"],
-    maxLength: [12, "Adhaar number is of 12 digit"],
-    unique: true,
+    validate: {
+      validator: function (v) {
+        return /^[0-9]{12}$/.test(v); // Ensures exactly 12 digits
+      },
+      message: "Adhaar number should be exactly 12 digits",
+    },
   },
   isAdhaarVerified: {
     type: Boolean,
@@ -30,7 +39,7 @@ const professionalSchema = new mongoose.Schema({
   isAvailable: {
     type: String,
     required: true,
-    default: false
+    default: false,
   },
   password: {
     type: String,

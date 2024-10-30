@@ -8,18 +8,15 @@ const CustomError = require("../utils/customError");
 exports.createBooking = BigPromise(async (req, res, next) => {
   const { userId, bookingDetails, serviceId } = req.body;
 
-
   const user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ success: false, message: "User not found" });
   }
 
   const service = await Service.findById(serviceId);
-  console.log(service, "hye")
   if (!service) {
     return next(new CustomError("No service found with this id", 401));
   }
-
 
   const booking = await Booking.create({
     bookingDetails,
@@ -31,5 +28,14 @@ exports.createBooking = BigPromise(async (req, res, next) => {
     success: true,
     message: "Booking created successfully",
     booking,
+  });
+});
+
+exports.getAllBookings = BigPromise(async (req, res, next) => {
+  const bookings = await Booking.find();
+
+  res.status(200).json({
+    success: true,
+    bookings,
   });
 });
