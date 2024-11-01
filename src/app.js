@@ -15,7 +15,18 @@ app.use(morgan("tiny"));
 
 
 const home = require('./routes/home');
+const user = require('./routes/user');
+const service = require("./routes/service");
+const payment = require("./routes/payment");
+const professional = require("./routes/professional");
+const bookings = require("./routes/booking");
+
 
 app.use('/api/v1', home);
+app.use('/api/v1', user);
+app.use('/api/v1', service);
+app.use('/api/v1', payment);
+app.use('/api/v1', professional);
+app.use('/api/v1', bookings);
 
 module.exports = app;
