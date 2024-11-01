@@ -6,15 +6,16 @@ const mailHelper = require("../utils/emailHelper");
 const crypto = require("crypto");
 
 exports.signup = BigPromise(async (req, res, next) => {
-  const { name, password, adhaarNumber, address, phone } = req.body;
+  const { name, adhaarNumber, address, phone } = req.body;
 
-  if (!name || !password || !adhaarNumber || !address || !phone) {
-    return next(new CustomError("Name, adhaar and password are required", 400));
+  if (!name || !adhaarNumber || !address || !phone) {
+    return next(
+      new CustomError("Name, adhaar, address and password are required", 400)
+    );
   }
 
   const professional = await Professional.create({
     name,
-    password,
     adhaarNumber,
     address,
     phone,
@@ -49,7 +50,7 @@ exports.updateProfessionalDetails = BigPromise(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    professional
+    professional,
   });
 });
 

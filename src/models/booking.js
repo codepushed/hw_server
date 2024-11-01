@@ -2,25 +2,8 @@ const mongoose = require("mongoose");
 
 const bookingSchema = new mongoose.Schema({
   bookingDetails: {
-    address: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    phoneNo: {
-      type: String,
-      required: true,
-    },
-    postalCode: {
-      type: String,
-      required: true,
-    },
-    state: {
-      type: String,
-    },
+   type: String,
+   required: true
   },
   user: {
     type: mongoose.Schema.ObjectId, //mongoose.Schema.Types.ObjectId
@@ -47,16 +30,23 @@ const bookingSchema = new mongoose.Schema({
   service: {
     type: Object,
   },
+  professional: {
+    type: Object,
+  },
+  slotDate: {
+    type: String,
+  },
+  slotTime: {
+    type: String,
+  },
   bookingStatus: {
     type: String,
     required: false,
     enum: ["Pending", "Accepted", "Completed", "Cancelled"],
     default: "Pending",
   },
-  professional: {
-    type: mongoose.Schema.ObjectId,
-    ref: "Professional",
-    default: null,
+  otp: {
+    type: String
   },
   acceptedAt: {
     type: Date,

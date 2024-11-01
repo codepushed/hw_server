@@ -17,7 +17,7 @@ exports.signup = BigPromise(async (req, res, next) => {
     name,
     email,
     password,
-    phone
+    phone,
   });
 
   cookieToken(user, res);
@@ -247,3 +247,37 @@ exports.adminUpdateOneProfessionalDetails = BigPromise(
     });
   }
 );
+
+exports.userAllProfessionals = BigPromise(async (req, res, next) => {
+  const professionals = await professional.find();
+
+  res.status(200).json({
+    success: true,
+    professionals,
+  });
+});
+
+exports.getProfessionalByProfession = BigPromise(async (req, res, next) => {
+  const profession = req.query.profession;
+
+  if (!profession) {
+    return res.status(400).json({ error: "Profession is required" });
+  }
+
+  const professionals = await professional.find();
+
+  const filteredProfessionals = [];
+  professionals.forEach((person) => {
+    if (
+      person.profession !== undefined &&
+      person.profession.toLowerCase() === profession.toLowerCase()
+    ) {
+      filteredProfessionals.push(person);
+    }
+  });
+
+  res.status(200).json({
+    success: true,
+    filteredProfessionals,
+  });
+});

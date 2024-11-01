@@ -14,6 +14,8 @@ const {
   getAddress,
   adminAllProfessionals,
   adminUpdateOneProfessionalDetails,
+  userAllProfessionals,
+  getProfessionalByProfession,
 } = require("../controllers/userController");
 const { isLoggedIn, customRole } = require("../middlewares/user");
 
@@ -27,6 +29,8 @@ router.route("/password/update").post(isLoggedIn, changePassword);
 router.route("/userdashboard/update").post(isLoggedIn, updateUserDetails);
 router.route("/userdashboard/address").post(isLoggedIn, addAddress);
 router.route("/userdashboard/address").get(isLoggedIn, getAddress);
+router.route("/user/professionals").get(isLoggedIn, customRole("user"), userAllProfessionals);
+router.route("/professionals").get(isLoggedIn, customRole("user"), getProfessionalByProfession);
 
 router.route("/admin/professionals").get(isLoggedIn, customRole("admin"), adminAllProfessionals);
 router
