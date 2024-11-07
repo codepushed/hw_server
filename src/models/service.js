@@ -10,6 +10,9 @@ const serviceSchema = new mongoose.Schema({
   gender: {
     type: String,
   },
+  image: {
+    type: String,
+  },
   subCategory: [
     {
       name: {
@@ -28,6 +31,9 @@ const serviceSchema = new mongoose.Schema({
           desc: {
             type: String,
             required: true,
+          },
+          image: {
+            type: String,
           },
         },
       ],
