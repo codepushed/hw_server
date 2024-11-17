@@ -42,7 +42,7 @@ exports.login = BigPromise(async (req, res, next) => {
 exports.adminLogin = BigPromise(async (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email && password) {
+  if (!email && !password) {
     return next(new CustomError("please provide email and password", 400));
   }
 
