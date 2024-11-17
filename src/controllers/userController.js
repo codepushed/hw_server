@@ -39,6 +39,23 @@ exports.login = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
+exports.adminLogin = BigPromise(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email && password) {
+    return next(new CustomError("please provide email and password", 400));
+  }
+
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user) {
+    return next(new CustomError("No account found", 400));
+  }
+
+  cookieToken(user, res);
+});
+
+
 exports.logout = BigPromise(async (req, res, next) => {
   res.cookie("token", null, {
     expires: new Date(Date.now()),
