@@ -41,12 +41,6 @@ const professionalSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-    minLength: [6, "Password should be atleast 6 character"],
-    select: false,
-  },
   address: {
     type: String,
     required: true,
