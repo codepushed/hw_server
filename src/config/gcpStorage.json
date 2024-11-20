@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "river-messenger-438107-k5",
+    "private_key_id": "eb3c6c318e44c1450e7967fb13d105ba7fcdba0c",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCe/0+rf2rQxm/O\nta1RW/Nu+JLG3koI7X8EhP9oBF5R3YYlS1jUMEAlxqkgCt9UCHi+02Wva78v+4fu\n2XOjNuqiCqkLOMCpGxga6h0ZvOZG5h+BTPKjvmOI94xrahljbL6ivZ1WKNXT9jbM\nYr7MbWp3s1Nd2qas/E6/lR4M+UfJa1kMQfdbm7QbM+OuXwMYaQfC3pkavTcRJIBF\nnN+1wP4xJH9WpZpGWdsvFSEpIRmGZ34O15C4OzByjn3V2rLaHkdCLTBbk4UNIFcR\nAZ+TGVq2o+L5jMXv2VBS/EreY9qaBY1dTYCFvqhske0xvHFIj16qqiY4ZzrQvfyy\nHm9hSPwrAgMBAAECggEANr92CPkOaEY0AKsJO38cgyUfsU+gkZNpzb4YDhKXAbx0\nMQpRU3sr03YlDU4BGXfzT84N8Qn6YsTLSUDiMxy5TUO7cow/ttsIAViE3bRwXJBn\n38eFs0FfF64Z0XDOvjAXMoV1FFJqUpqwws7roQu6Ae6jMamVA/K7EPgBSXlasS10\nyVURWlv3bXLqjB+1QOFuOrfniSEIT3FCr4JqZ2eY+rr6PW6g7KaBhMDqDQZI6RQ0\n82n97AhVacl7WbOv2qCr4U+pe35SvH6gx8t650qsDffxu6L+vU0uP8aEvBEbN2jJ\nxCP5Ek71pDGPMIyqdowDpFeB3mf6czvaDOxa7BYfsQKBgQDYlOoM+pOFDFsYmzFH\nRWUCnlN8sOBw8YEjuUntohMoyMl9i4JeOTzKR9juaOeqioZ9tq1fg1XbhdSqHQU4\nv2lFjjcKG1LaUIwSt+invl+8us67IpxJJ6y7ujSsQJ6OyCSVlYUVz30JGwMX0Nq7\nGW8iCq7dqIWBxvlSZgs198vcMQKBgQC772VFc5T0/8Q1i8D3ZzzRypOJcVZldC+e\n0ACtl/s4QIVJkF1UgZpN+8H148GjlUNfZvPjn36toTPmpGKtnuPUd81v75Arpioa\nuJ/fJI2+t0j3fsN96y1/ryXITL2SvP0A0pRzvR/7Rfki2Nq8G+opjRvVWFvp0ObZ\nD4sShNszGwKBgQC82uVYWevm+YY556HJzxYseVi9gxLDCaQdPYXchBaG2sbwBYWx\nmeGLVakxAyL30AFEf9WgUsq8OG/fwpx6BlbKgx81XewaWGA8NkfWdafPz2lTPvPe\nyozRyaYCifp48McN9KpvAVW7aeWBj+obeisxGPWwbTG1n4ZqtnaSIbiPEQKBgFPo\nEkLr07l+588wUjsjMJhJ5Y0buQMa2JgDLgpTLKp0xA2QEttD8eyXVoW95hpu7eGO\nSZ16/EfxDQcQpa32nqmhw2sSfj++tFWx0E8ENvTLSByX0BhMA8haHnhLKuh00FCp\ns/XonnrFRvIz95S8sdNTWPXruT2vMyH+Oo1OG7+5AoGBAKTWbBxDyDatSo5L/kkA\njwAOK13y0CmutQrtQzXSI9nhKiqh1dMXkmunkWLan2JfJXjE5hj61J3u3P8xA76x\nANbJg3C7Zz2XVzv5z1b3fa+Us97qwEAZlmrdti2Des2tRXQOwhNYx6HtyPSFvqY3\nujNODrsfCgXflayqgGPfeo3U\n-----END PRIVATE KEY-----\n",
+    "client_email": "homeworkpro@river-messenger-438107-k5.iam.gserviceaccount.com",
+    "client_id": "105561070242064546086",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/homeworkpro%40river-messenger-438107-k5.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

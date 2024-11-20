@@ -4,6 +4,14 @@ const CustomError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
 const mailHelper = require("../utils/emailHelper");
 const crypto = require("crypto");
+const { Storage } = require("@google-cloud/storage");
+const path = require("path");
+
+const storageNew = new Storage({
+  keyFilename: path.join(__dirname, "../config/gcpStorage.json"),
+});
+const bucketName = "assets-hw";
+const bucket = storageNew.bucket(bucketName);
 
 exports.signup = BigPromise(async (req, res, next) => {
   const { name, adhaarNumber, address, phone } = req.body;
@@ -52,6 +60,49 @@ exports.updateProfessionalDetails = BigPromise(async (req, res, next) => {
     success: true,
     professional,
   });
+});
+
+exports.uploadFileToGCP = BigPromise(async (req, res, next) => {
+  if (!req.files || !req.files.file) {
+    return res.status(400).json({
+      success: false,
+      message: "No file uploaded.",
+    });
+  }
+
+  try {
+    const file = req.files.file; // The uploaded file from form-data
+    // Create a file object in GCP bucket with a unique name (using timestamp)
+    const blob = bucket.file(Date.now() + "-" + file.name);
+    const blobStream = blob.createWriteStream();
+
+    // Pipe the file buffer to the blob stream
+    blobStream.on("finish", () => {
+      // Successfully uploaded to GCP
+      res.status(200).json({
+        success: true,
+        message: "File uploaded successfully .",
+        fileUrl: `https://storage.googleapis.com/${bucket.name}/${blob.name}`, // Public URL of the uploaded file
+      });
+    });
+
+    blobStream.on("error", (err) => {
+      res.status(500).json({
+        success: false,
+        message: "Failed to upload file.",
+        error: err.message,
+      });
+    });
+
+    // Write the file buffer to the stream
+    blobStream.end(file.data); // Use file.data from memory storage
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "File upload failed.",
+      error: error.message,
+    });
+  }
 });
 
 // exports.login = BigPromise(async (req, res, next) => {
