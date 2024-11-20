@@ -6,7 +6,6 @@ const {
   getLoggedInProfessionalDetails,
   updateProfessionalDetails,
   uploadFileToGCP,
-  uploadProfileImage,
 } = require("../controllers/professionalController");
 const { isProfessionalLoggedIn } = require("../middlewares/user");
 
