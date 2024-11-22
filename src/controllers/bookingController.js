@@ -25,7 +25,7 @@ exports.createBooking = BigPromise(async (req, res, next) => {
 
   const pro = await professional.findById(professionalId);
   if (!pro) {
-    return res.status(404).json({ success: false, message: "User not found" });
+    return res.status(404).json({ success: false, message: "professional not found" });
   }
 
   const booking = await Booking.create({

@@ -44,6 +44,9 @@ router
   .route("/admin/professionals/:id")
   .put(isLoggedIn, customRole("admin"), adminUpdateOneProfessionalDetails);
 
+  router
+  .route("/admin/user/:id").get(isLoggedIn, customRole("admin"), admingetOneUser)
+
 router.route("/admin").post(adminLogin);
 
 module.exports = router;
