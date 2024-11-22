@@ -17,6 +17,7 @@ const {
   userAllProfessionals,
   getProfessionalByProfession,
   adminLogin,
+  admingetOneUser,
 } = require("../controllers/userController");
 const { isLoggedIn, customRole } = require("../middlewares/user");
 
