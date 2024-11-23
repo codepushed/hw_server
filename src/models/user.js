@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    required: true
+    required: true,
   },
   address: [
     {
@@ -51,6 +51,12 @@ const userSchema = new mongoose.Schema({
       // required: true,
     },
   },
+  bookings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Booking",
+    },
+  ],
   forgotPasswordToken: String,
   forgotPasswordExpiry: Date,
   createdAt: {

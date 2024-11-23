@@ -40,6 +40,9 @@ exports.createBooking = BigPromise(async (req, res, next) => {
     otp: otp,
   });
 
+  user.bookings.push(booking._id);
+  await user.save();
+
   res.status(201).json({
     success: true,
     message: "Booking created successfully",
