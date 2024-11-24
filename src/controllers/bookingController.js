@@ -14,8 +14,8 @@ exports.createBooking = BigPromise(async (req, res, next) => {
     service,
     slotDate,
     slotTime,
-    otp,
-    professionalId,
+    // otp,
+    // professionalId,
   } = req.body;
 
   const user = await User.findById(userId);
@@ -23,12 +23,12 @@ exports.createBooking = BigPromise(async (req, res, next) => {
     return res.status(404).json({ success: false, message: "User not found" });
   }
 
-  const pro = await professional.findById(professionalId);
-  if (!pro) {
-    return res
-      .status(404)
-      .json({ success: false, message: "professional not found" });
-  }
+  // const pro = await professional.findById(professionalId);
+  // if (!pro) {
+  //   return res
+  //     .status(404)
+  //     .json({ success: false, message: "professional not found" });
+  // }
 
   const booking = await Booking.create({
     bookingDetails,
@@ -36,8 +36,8 @@ exports.createBooking = BigPromise(async (req, res, next) => {
     service: service,
     slotDate: slotDate,
     slotTime: slotTime,
-    professional: pro,
-    otp: otp,
+    // professional: pro,
+    // otp: otp,
   });
 
   user.bookings.push(booking._id);
